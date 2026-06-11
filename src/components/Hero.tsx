@@ -47,7 +47,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mt-8 text-lg md:text-2xl text-slate-400 font-normal leading-relaxed max-w-3xl"
         >
-          Accelerate your supply chain with India's premier procurement partner. Reliable general, specialized, industrial, and agricultural supplies.
+          Powering Progress, from Field to Factory.<br />The Brightest Standard in Comprehensive Supply.
         </motion.p>
 
         <motion.div
