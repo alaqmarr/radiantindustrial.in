@@ -41,12 +41,12 @@ export default function Contact() {
     }
   };
 
-  const inputStyle = "w-full bg-transparent border-b-2 border-slate-200 py-4 px-0 text-brand-slate focus:border-brand-orange outline-none transition-colors placeholder:text-slate-400 font-medium";
+  const inputStyle = "w-full bg-[#020617] border border-white/10 rounded-2xl py-4 px-6 text-white focus:border-brand-orange outline-none transition-colors placeholder:text-slate-500 font-medium";
 
   return (
-    <section id="contact" className="py-32 bg-[#f8fafc] relative">
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+    <section id="contact" className="py-20 relative z-20">
+      <div className="container mx-auto px-4 md:px-8">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-start">
           {/* Contact Information */}
           <motion.div 
             initial={{ opacity: 0, x: -30 }}
@@ -56,60 +56,60 @@ export default function Contact() {
           >
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-[2px] bg-brand-orange"></div>
-              <span className="uppercase tracking-widest text-sm font-bold text-slate-400">Get in Touch</span>
+              <span className="uppercase tracking-widest text-sm font-bold text-slate-500">Get in Touch</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-brand-slate mb-8 tracking-tight">
-              Let’s build something <br/> <span className="text-brand-orange">great together.</span>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-8 tracking-tighter">
+              Let’s build something <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-200 to-brand-orange">great together.</span>
             </h2>
-            <p className="text-lg text-slate-500 mb-12 max-w-md">
+            <p className="text-lg text-slate-400 mb-12 max-w-md font-normal leading-relaxed">
               Ready to streamline your procurement? Reach out to our team today to discuss your supply needs or request a custom quote.
             </p>
 
-            <div className="space-y-8">
-              <div className="group flex items-start gap-6">
-                <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-brand-orange shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+            <div className="space-y-6">
+              <div className="group flex items-start gap-6 p-6 rounded-3xl bg-slate-900/40 backdrop-blur-xl border border-white/5 hover:border-brand-orange/30 transition-all duration-300">
+                <div className="w-12 h-12 rounded-2xl bg-[#020617] border border-white/10 flex items-center justify-center text-brand-orange shrink-0 group-hover:scale-110 transition-transform duration-300">
                   <MapPin size={20} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-brand-slate mb-1">Headquarters</h4>
-                  <p className="text-slate-500 leading-relaxed">
+                  <h4 className="font-bold text-white mb-1 text-lg">Headquarters</h4>
+                  <p className="text-slate-400 leading-relaxed font-normal">
                     Sai Vaishnavi Complex, Ranigunj, <br/>
                     Secunderabad 500003, Telangana, India
                   </p>
                 </div>
               </div>
               
-              <div className="group flex items-start gap-6">
-                <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-brand-orange shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+              <div className="group flex items-start gap-6 p-6 rounded-3xl bg-slate-900/40 backdrop-blur-xl border border-white/5 hover:border-brand-orange/30 transition-all duration-300">
+                <div className="w-12 h-12 rounded-2xl bg-[#020617] border border-white/10 flex items-center justify-center text-brand-orange shrink-0 group-hover:scale-110 transition-transform duration-300">
                   <Phone size={20} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-brand-slate mb-1">Phone</h4>
-                  <a href="tel:+919618443558" className="text-slate-500 hover:text-brand-orange transition-colors">
+                  <h4 className="font-bold text-white mb-1 text-lg">Phone</h4>
+                  <a href="tel:+919618443558" className="text-slate-400 font-normal hover:text-white transition-colors">
                     +91 9618443558
                   </a>
                 </div>
               </div>
 
-              <div className="group flex items-start gap-6">
-                <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-brand-orange shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+              <div className="group flex items-start gap-6 p-6 rounded-3xl bg-slate-900/40 backdrop-blur-xl border border-white/5 hover:border-brand-orange/30 transition-all duration-300">
+                <div className="w-12 h-12 rounded-2xl bg-[#020617] border border-white/10 flex items-center justify-center text-brand-orange shrink-0 group-hover:scale-110 transition-transform duration-300">
                   <Mail size={20} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-brand-slate mb-1">Email</h4>
-                  <a href="mailto:info@radiantindustrial.in" className="text-slate-500 hover:text-brand-orange transition-colors">
+                  <h4 className="font-bold text-white mb-1 text-lg">Email</h4>
+                  <a href="mailto:info@radiantindustrial.in" className="text-slate-400 font-normal hover:text-white transition-colors">
                     info@radiantindustrial.in
                   </a>
                 </div>
               </div>
 
-              <div className="group flex items-start gap-6">
-                <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-brand-orange shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+              <div className="group flex items-start gap-6 p-6 rounded-3xl bg-slate-900/40 backdrop-blur-xl border border-white/5 hover:border-brand-orange/30 transition-all duration-300">
+                <div className="w-12 h-12 rounded-2xl bg-[#020617] border border-white/10 flex items-center justify-center text-brand-orange shrink-0 group-hover:scale-110 transition-transform duration-300">
                   <Clock size={20} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-brand-slate mb-1">Operating Hours</h4>
-                  <p className="text-slate-500">Mon – Sat, 9:00 AM – 6:00 PM</p>
+                  <h4 className="font-bold text-white mb-1 text-lg">Operating Hours</h4>
+                  <p className="text-slate-400 font-normal">Mon – Sat, 9:00 AM – 6:00 PM</p>
                 </div>
               </div>
             </div>
@@ -120,36 +120,38 @@ export default function Contact() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="order-1 lg:order-2 bg-white p-10 md:p-14 rounded-[2.5rem] shadow-2xl shadow-slate-200/50"
+            className="order-1 lg:order-2 bg-slate-900/40 backdrop-blur-2xl border border-white/10 p-8 md:p-12 rounded-[3rem] shadow-2xl relative overflow-hidden"
           >
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-orange/5 to-transparent pointer-events-none"></div>
+
             {submitSuccess ? (
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="h-full min-h-[400px] flex flex-col items-center justify-center text-center"
+                className="h-full min-h-[500px] flex flex-col items-center justify-center text-center relative z-10"
               >
-                <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle className="w-10 h-10 text-green-500" />
+                <div className="w-24 h-24 bg-green-500/20 border border-green-500/30 rounded-full flex items-center justify-center mb-8">
+                  <CheckCircle className="w-12 h-12 text-green-400" />
                 </div>
-                <h4 className="text-2xl font-extrabold text-brand-slate mb-3">Message Sent</h4>
-                <p className="text-slate-500">Thank you for reaching out. Our team will get back to you shortly.</p>
+                <h4 className="text-3xl font-extrabold text-white mb-4 tracking-tight">Message Sent</h4>
+                <p className="text-slate-400 text-lg font-normal">Thank you for reaching out. Our team will get back to you shortly.</p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative z-10">
                 {submitError && (
-                  <div className="p-4 bg-red-50 text-red-600 rounded-2xl text-sm border border-red-100 font-medium">
+                  <div className="p-4 bg-red-900/30 text-red-400 rounded-2xl border border-red-500/30 text-sm font-medium">
                     {submitError}
                   </div>
                 )}
                 
-                <div className="grid md:grid-cols-2 gap-8">
+                <div className="grid md:grid-cols-2 gap-6">
                   <div className="relative">
                     <input 
                       {...register("name", { required: "Name is required" })}
                       className={inputStyle}
                       placeholder="Full Name *"
                     />
-                    {errors.name && <span className="absolute -bottom-5 left-0 text-xs text-red-500 font-medium">{errors.name.message}</span>}
+                    {errors.name && <span className="absolute -bottom-5 left-2 text-xs text-red-400 font-medium">{errors.name.message}</span>}
                   </div>
                   
                   <div className="relative">
@@ -162,11 +164,11 @@ export default function Contact() {
                       className={inputStyle}
                       placeholder="Email Address *"
                     />
-                    {errors.email && <span className="absolute -bottom-5 left-0 text-xs text-red-500 font-medium">{errors.email.message}</span>}
+                    {errors.email && <span className="absolute -bottom-5 left-2 text-xs text-red-400 font-medium">{errors.email.message}</span>}
                   </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative pt-2">
                   <input 
                     {...register("phone")}
                     className={inputStyle}
@@ -174,21 +176,21 @@ export default function Contact() {
                   />
                 </div>
 
-                <div className="relative">
+                <div className="relative pt-2">
                   <textarea 
                     {...register("message", { required: "Message is required" })}
-                    rows={4}
+                    rows={5}
                     className={`${inputStyle} resize-none`}
                     placeholder="Tell us about your requirements... *"
                   ></textarea>
-                  {errors.message && <span className="absolute -bottom-5 left-0 text-xs text-red-500 font-medium">{errors.message.message}</span>}
+                  {errors.message && <span className="absolute -bottom-5 left-2 text-xs text-red-400 font-medium">{errors.message.message}</span>}
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-6">
                   <button 
                     type="submit"
                     disabled={isSubmitting}
-                    className="group w-full py-5 bg-brand-slate hover:bg-brand-orange text-white rounded-2xl font-bold tracking-wide transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-70 disabled:hover:bg-brand-slate"
+                    className="group w-full py-5 bg-white hover:bg-brand-orange text-[#020617] hover:text-white rounded-2xl font-bold tracking-wide transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-70 disabled:hover:bg-white disabled:hover:text-[#020617]"
                   >
                     {isSubmitting ? (
                       <>

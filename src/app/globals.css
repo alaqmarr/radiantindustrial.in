@@ -10,14 +10,13 @@
 }
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #020617;
+  --foreground: #cbd5e1;
 }
 
 body {
   color: var(--foreground);
-  background: linear-gradient(to bottom right, #f8fafc, #fff7ed, #f1f5f9);
-  background-attachment: fixed;
+  background-color: var(--background);
   font-family: var(--font-sans);
 }
 

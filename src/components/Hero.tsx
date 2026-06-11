@@ -2,76 +2,81 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative w-full h-[85vh] min-h-[650px] flex items-center overflow-hidden">
-      {/* Full Bleed Background Image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80"
-          alt="Industrial manufacturing facility"
-          fill
-          className="object-cover object-[70%_center] md:object-center"
-          priority
-        />
+    <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center overflow-hidden pt-20">
+      {/* Ultra-smooth Glowing Mesh Background */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[1000px] h-[500px] pointer-events-none opacity-40">
+        <div className="absolute top-[20%] left-[20%] w-[400px] h-[400px] bg-brand-orange/40 rounded-full mix-blend-screen blur-[120px] animate-pulse" style={{ animationDuration: '8s' }}></div>
+        <div className="absolute bottom-[20%] right-[20%] w-[500px] h-[500px] bg-slate-500/30 rounded-full mix-blend-screen blur-[140px] animate-pulse" style={{ animationDuration: '12s', animationDelay: '2s' }}></div>
+        <div className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[600px] h-[300px] bg-brand-orange/20 rounded-full mix-blend-screen blur-[100px]"></div>
       </div>
 
-      {/* Solid Opaque Block for Text (Left Half) */}
-      <div className="relative z-10 w-full md:w-[65%] lg:w-[55%] h-full bg-brand-slate flex flex-col justify-center px-6 md:px-16 lg:px-24 shadow-[30px_0_60px_rgba(0,0,0,0.5)]">
-        {/* Subtle texture in the block */}
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] z-0"></div>
+      {/* Grid Pattern Overlay for Tech feel */}
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.02] z-0 pointer-events-none"></div>
 
-        <div className="relative z-10 max-w-xl">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-1 bg-brand-orange"></div>
-              <span className="uppercase tracking-widest text-sm font-bold text-slate-400">Radiant Industrial Co.</span>
-            </div>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[80px] font-extrabold text-white tracking-tight leading-[1.05]">
-              Powering <br />
-              <span className="text-brand-orange">Progress.</span>
-            </h1>
-          </motion.div>
+      <div className="container mx-auto px-4 md:px-8 relative z-10 flex flex-col items-center text-center mt-10">
 
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <p className="mt-8 text-lg md:text-xl text-slate-300 font-medium leading-relaxed">
-              From field to factory. Your premier procurement partner delivering reliable general, specialized, industrial, and agricultural supplies.
-            </p>
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 border border-slate-800 backdrop-blur-md mb-8"
+        >
+          <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse"></span>
+          <span className="text-sm font-medium tracking-wide text-slate-300">The New Standard in Procurement</span>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-6"
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="text-5xl sm:text-7xl md:text-8xl lg:text-[100px] font-extrabold text-white tracking-tighter leading-[1.05] max-w-5xl"
+        >
+          Radiant Industrial <br className="hidden md:block" />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-brand-orange drop-shadow-[0_0_40px_rgba(249,115,22,0.2)]">
+            Co.
+          </span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-8 text-lg md:text-2xl text-slate-400 font-normal leading-relaxed max-w-3xl"
+        >
+          Accelerate your supply chain with India's premier procurement partner. Reliable general, specialized, industrial, and agricultural supplies.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto"
+        >
+          <Link
+            href="/contact"
+            className="group relative inline-flex items-center justify-center px-8 py-4 bg-white text-black font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 w-full sm:w-auto"
           >
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center px-8 py-4 bg-brand-orange text-white text-base font-bold rounded-lg hover:bg-orange-600 transition-colors duration-300 w-full sm:w-auto"
-            >
-              Request a Quote
-            </Link>
-            <Link
-              href="#divisions"
-              className="group inline-flex items-center gap-2 px-6 py-4 text-slate-300 hover:text-white text-base font-semibold transition-colors duration-300 w-full sm:w-auto"
-            >
-              Explore Divisions
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-300 text-brand-orange" />
-            </Link>
-          </motion.div>
-        </div>
+            <span className="relative z-10 flex items-center gap-2">
+              Start Building <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-200 to-white opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </Link>
+          <Link
+            href="#divisions"
+            className="group inline-flex items-center justify-center gap-2 px-8 py-4 text-slate-300 bg-slate-900/50 hover:bg-slate-800 border border-slate-800 font-medium rounded-full transition-all duration-300 hover:text-white w-full sm:w-auto backdrop-blur-sm"
+          >
+            View Infrastructure
+            <ChevronRight size={18} className="text-brand-orange group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </motion.div>
       </div>
+
+      {/* Fade out to the next section */}
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#020617] to-transparent z-10 pointer-events-none"></div>
     </section>
   );
 }

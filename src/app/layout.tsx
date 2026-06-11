@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FloatingContact from "@/components/FloatingContact";
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -80,9 +81,9 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth dark">
       <body
-        className={`${plusJakarta.variable} font-sans antialiased text-brand-slate flex flex-col min-h-screen`}
+        className={`${inter.variable} font-sans antialiased bg-[#020617] text-slate-300 flex flex-col min-h-screen selection:bg-brand-orange/30 selection:text-white`}
       >
         <script
           type="application/ld+json"
@@ -93,6 +94,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <FloatingContact />
       </body>
     </html>
   );
