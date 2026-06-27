@@ -23,3 +23,72 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* Custom Premium Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+/* Utility to hide scrollbars completely */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Fix Rich Text Editor (ReactQuill) Colors */
+.ql-container {
+  font-family: inherit !important;
+}
+.ql-editor {
+  color: #1e293b !important; /* Dark slate for readability on white background */
+  font-family: var(--font-sans) !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+.ql-editor.ql-blank::before {
+  color: #94a3b8 !important; /* Lighter placeholder */
+  font-style: normal !important;
+}
+
+/* Fix Email Preview Inheritance */
+.email-preview-container {
+  color: #1e293b !important; /* Force dark text regardless of global dark mode */
+}
+.email-preview-container * {
+  border-color: #e2e8f0; /* Default border color for tables */
+}
+.email-preview-container h1, 
+.email-preview-container h2, 
+.email-preview-container h3, 
+.email-preview-container h4, 
+.email-preview-container h5, 
+.email-preview-container h6 {
+  color: #0f172a !important; /* Darker headings */
+}
