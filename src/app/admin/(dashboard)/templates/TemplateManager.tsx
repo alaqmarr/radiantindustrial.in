@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { saveTemplate, deleteTemplate } from "../../actions";
-import { Plus, Trash2, Edit, X } from "lucide-react";
+import { Plus, Trash2, Edit, X, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
 
