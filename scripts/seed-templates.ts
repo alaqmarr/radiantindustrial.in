@@ -132,7 +132,7 @@ Are you currently facing any supply chain bottlenecks or do you have any active 
 Let us know, and we'd be happy to share our best rates!
 
 🌐 View our catalog: https://radiantindustrial.in
-📧 Email: sales@radiantindustrial.in
+📧 Email: info@radiantindustrial.in
 
 Best Regards,
 *The Radiant Team*`

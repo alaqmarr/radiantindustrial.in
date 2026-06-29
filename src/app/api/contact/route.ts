@@ -71,7 +71,7 @@ ${message}
           <br/>
           <p>Best regards,</p>
           <p><strong>The Radiant Industrial Co. Team</strong></p>
-          <p><a href="mailto:info@radiantindustrial.in">info@radiantindustrial.in</a> | +91 9618443558</p>
+          <p><a href="mailto:info@radiantindustrial.in">info@radiantindustrial.in</a> | +91 8522095253</p>
         </div>
       `,
     };

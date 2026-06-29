@@ -63,7 +63,7 @@ export default function RootLayout({
     "logo": "https://radiantindustrial.in/logos/logo-long.png",
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+91-9618443558",
+      "telephone": "+91-8522095253",
       "contactType": "customer service",
       "areaServed": "IN",
       "availableLanguage": ["English", "Hindi"]

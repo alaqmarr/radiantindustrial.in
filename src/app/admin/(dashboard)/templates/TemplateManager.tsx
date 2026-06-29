@@ -1,17 +1,70 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { saveTemplate, deleteTemplate } from "../../actions";
-import { Plus, Trash2, Edit, X, Mail } from "lucide-react";
-import dynamic from "next/dynamic";
+import { Plus, Trash2, Edit, X, Mail, Type, AlertCircle, Info, PenTool, AlertTriangle, Table, List, Sparkles, Quote, Code, Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, Link2, List as ListIcon, ListOrdered } from "lucide-react";
 import "react-quill-new/dist/quill.snow.css";
 
-// ReactQuill must be dynamically imported with SSR disabled
-const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
+const NativeHtmlEditor = ({ value, onChange }: { value: string, onChange: (val: string) => void }) => {
+  const editorRef = useRef<HTMLDivElement>(null);
+
+  // Sync external value to editor only if different, avoiding cursor jumps
+  useEffect(() => {
+    if (editorRef.current && editorRef.current.innerHTML !== value) {
+      editorRef.current.innerHTML = value;
+    }
+  }, [value]);
+
+  const handleInput = () => {
+    if (editorRef.current) {
+      onChange(editorRef.current.innerHTML);
+    }
+  };
+
+  const execCmd = (cmd: string, val?: string) => {
+    document.execCommand(cmd, false, val);
+    handleInput();
+  };
+
+  return (
+    <div className="flex-1 flex flex-col bg-white text-black h-full overflow-hidden rounded-xl border border-white/10 shadow-xl">
+      {/* Toolbar */}
+      <div className="flex flex-wrap items-center gap-1 p-2 bg-slate-100 border-b border-slate-200">
+        <button type="button" onMouseDown={e => { e.preventDefault(); execCmd('bold'); }} className="p-1.5 hover:bg-slate-200 rounded text-slate-700 transition-colors" title="Bold"><Bold size={16}/></button>
+        <button type="button" onMouseDown={e => { e.preventDefault(); execCmd('italic'); }} className="p-1.5 hover:bg-slate-200 rounded text-slate-700 transition-colors" title="Italic"><Italic size={16}/></button>
+        <button type="button" onMouseDown={e => { e.preventDefault(); execCmd('underline'); }} className="p-1.5 hover:bg-slate-200 rounded text-slate-700 transition-colors" title="Underline"><Underline size={16}/></button>
+        <div className="w-px h-5 bg-slate-300 mx-1"></div>
+        <button type="button" onMouseDown={e => { e.preventDefault(); execCmd('justifyLeft'); }} className="p-1.5 hover:bg-slate-200 rounded text-slate-700 transition-colors"><AlignLeft size={16}/></button>
+        <button type="button" onMouseDown={e => { e.preventDefault(); execCmd('justifyCenter'); }} className="p-1.5 hover:bg-slate-200 rounded text-slate-700 transition-colors"><AlignCenter size={16}/></button>
+        <button type="button" onMouseDown={e => { e.preventDefault(); execCmd('justifyRight'); }} className="p-1.5 hover:bg-slate-200 rounded text-slate-700 transition-colors"><AlignRight size={16}/></button>
+        <div className="w-px h-5 bg-slate-300 mx-1"></div>
+        <button type="button" onMouseDown={e => { e.preventDefault(); execCmd('insertUnorderedList'); }} className="p-1.5 hover:bg-slate-200 rounded text-slate-700 transition-colors"><ListIcon size={16}/></button>
+        <button type="button" onMouseDown={e => { e.preventDefault(); execCmd('insertOrderedList'); }} className="p-1.5 hover:bg-slate-200 rounded text-slate-700 transition-colors"><ListOrdered size={16}/></button>
+        <div className="w-px h-5 bg-slate-300 mx-1"></div>
+        <button type="button" onMouseDown={e => { 
+          e.preventDefault(); 
+          const url = prompt('Enter link URL:');
+          if (url) execCmd('createLink', url);
+        }} className="p-1.5 hover:bg-slate-200 rounded text-slate-700 transition-colors"><Link2 size={16}/></button>
+      </div>
+      
+      {/* Editor Area */}
+      <div 
+        ref={editorRef}
+        contentEditable
+        onInput={handleInput}
+        onBlur={handleInput}
+        className="flex-1 overflow-y-auto p-5 outline-none text-[15px] leading-relaxed max-w-none email-content-area"
+        style={{ fontFamily: "'Inter', sans-serif" }}
+      />
+    </div>
+  );
+};
 
 export default function TemplateManager({ templates }: { templates: any[] }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isHtmlMode, setIsHtmlMode] = useState(false);
   
   const [formData, setFormData] = useState({
     id: "",
@@ -127,7 +180,7 @@ export default function TemplateManager({ templates }: { templates: any[] }) {
             </div>
             
             <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden relative z-10">
-              <div className="grid grid-cols-2 gap-6 mb-6">
+              <div className="grid grid-cols-2 gap-6 mb-4 shrink-0">
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">Template Name *</label>
                   <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} placeholder="e.g. Quotation Email" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-brand-orange/50 outline-none transition-all shadow-inner" />
@@ -142,7 +195,7 @@ export default function TemplateManager({ templates }: { templates: any[] }) {
               </div>
               
               {formData.type === "EMAIL" && (
-                <div className="mb-6">
+                <div className="mb-4 shrink-0">
                   <label className="block text-sm font-medium text-slate-300 mb-2">Subject Line</label>
                   <input type="text" value={formData.subject} onChange={e => setFormData({...formData, subject: e.target.value})} placeholder="e.g. Quotation for {{company}}" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-brand-orange/50 outline-none transition-all shadow-inner" />
                 </div>
@@ -151,27 +204,47 @@ export default function TemplateManager({ templates }: { templates: any[] }) {
               <div className="flex-1 flex gap-6 overflow-hidden min-h-0">
                 {/* Left Side: Editor */}
                 <div className="flex-1 flex flex-col min-h-0">
-                  <label className="block text-sm font-medium text-slate-300 mb-2 flex justify-between items-end">
-                    <span>Message Body</span>
-                    <span className="text-xs text-brand-orange bg-brand-orange/10 px-2 py-1 rounded-md border border-brand-orange/20">Supports placeholders like {`{{name}}, {{company}}`}</span>
-                  </label>
+                  <div className="flex justify-between items-end mb-2 shrink-0">
+                    <label className="block text-sm font-medium text-slate-300">Message Body</label>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs text-brand-orange bg-brand-orange/10 px-2 py-1 rounded-md border border-brand-orange/20">Supports placeholders like {`{{name}}, {{company}}`}</span>
+                      <button type="button" onClick={() => setIsHtmlMode(!isHtmlMode)} className={`text-xs px-3 py-1 rounded-md border transition-all flex items-center gap-1.5 ${isHtmlMode ? 'bg-brand-orange text-white border-brand-orange' : 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-300'}`}>
+                        <Code className="w-3.5 h-3.5" /> HTML Mode
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {/* Snippet Buttons */}
+                  {formData.type === "EMAIL" && (
+                    <div className="flex flex-wrap gap-2 mb-3 shrink-0">
+                      <button type="button" onClick={() => setFormData(prev => ({...prev, body: prev.body + `<h2 class="content-heading" style="color: #1a202c; margin-top: 0; font-size: 22px; font-weight: 700;">Section Heading</h2><p style="color: #2d3748; font-size: 15px; line-height: 1.7;">Start typing here...</p>`}))} className="text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 shadow-sm hover:shadow-black/20 hover:border-white/20"><Type className="w-3.5 h-3.5 text-brand-orange" /> Heading</button>
+                      <button type="button" onClick={() => setFormData(prev => ({...prev, body: prev.body + `<div class="callout-box" style="background-color: #faf8f5; border-left: 4px solid #ea580c; padding: 16px 20px; margin: 25px 0; border-radius: 0 6px 6px 0;"><p style="margin: 0; color: #4a4238; font-style: italic; font-size: 14px;">Important callout text here...</p></div><p style="color: #2d3748; font-size: 15px; line-height: 1.7;">&nbsp;</p>`}))} className="text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 shadow-sm hover:shadow-black/20 hover:border-white/20"><AlertCircle className="w-3.5 h-3.5 text-brand-orange" /> Orange Callout</button>
+                      <button type="button" onClick={() => setFormData(prev => ({...prev, body: prev.body + `<div class="callout-box" style="background-color: #f0fdf4; border-left: 4px solid #22c55e; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0;"><h3 style="color: #166534; margin: 0 0 10px 0; font-size: 16px; font-weight: 700;">Information Summary</h3><p style="margin: 0; color: #14532d; font-size: 14px;">Details go here...</p></div><p style="color: #2d3748; font-size: 15px; line-height: 1.7;">&nbsp;</p>`}))} className="text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 shadow-sm hover:shadow-black/20 hover:border-white/20"><Info className="w-3.5 h-3.5 text-green-500" /> Green Info Box</button>
+                      <button type="button" onClick={() => setFormData(prev => ({...prev, body: prev.body + `<div class="callout-box" style="background-color: #fff1f2; border-left: 4px solid #e11d48; padding: 16px 20px; margin: 30px 0; border-radius: 0 6px 6px 0;"><p style="margin: 0; color: #9f1239; font-size: 14px; line-height: 1.6;"><strong>Critical alert:</strong> Please pay attention to this.</p></div><p style="color: #2d3748; font-size: 15px; line-height: 1.7;">&nbsp;</p>`}))} className="text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 shadow-sm hover:shadow-black/20 hover:border-white/20"><AlertTriangle className="w-3.5 h-3.5 text-red-500" /> Red Alert</button>
+                      <button type="button" onClick={() => setFormData(prev => ({...prev, body: prev.body + `<div style="background-color: #faf9f7; border: 1px solid #e8e2d9; padding: 20px; margin: 25px 0; border-radius: 8px;"><table class="responsive-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="font-family: 'Inter', sans-serif;"><tr><td style="color: #718096; font-weight: 600; width: 40%; font-size: 14px; padding-bottom: 8px;">Label 1:</td><td style="color: #1a202c; padding-bottom: 8px; font-size: 14px;"><strong>Value 1</strong></td></tr><tr><td style="color: #718096; font-weight: 600; width: 40%; font-size: 14px;">Label 2:</td><td style="color: #1a202c; font-size: 14px;"><strong>Value 2</strong></td></tr></table></div><p style="color: #2d3748; font-size: 15px; line-height: 1.7;">&nbsp;</p>`}))} className="text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 shadow-sm hover:shadow-black/20 hover:border-white/20"><Table className="w-3.5 h-3.5 text-blue-400" /> Info Table</button>
+                      <button type="button" onClick={() => setFormData(prev => ({...prev, body: prev.body + `<table class="responsive-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin: 30px 0; border: 1px solid #e8e2d9; border-radius: 8px; overflow: hidden; font-family: 'Inter', sans-serif;"><tr><td width="35%" style="background-color: #faf9f7; padding: 16px; border-right: 1px solid #e8e2d9; border-bottom: 1px solid #e8e2d9; font-weight: 600; color: #718096; font-size: 14px;">Row 1 Label</td><td width="65%" style="padding: 16px; border-bottom: 1px solid #e8e2d9; color: #1a202c; font-weight: 700; font-size: 14px;">Row 1 Value</td></tr><tr><td width="35%" style="background-color: #faf9f7; padding: 16px; border-right: 1px solid #e8e2d9; font-weight: 600; color: #718096; font-size: 14px;">Row 2 Label</td><td width="65%" style="padding: 16px; color: #1a202c; font-weight: 700; font-size: 14px;">Row 2 Value</td></tr></table><p style="color: #2d3748; font-size: 15px; line-height: 1.7;">&nbsp;</p>`}))} className="text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 shadow-sm hover:shadow-black/20 hover:border-white/20"><List className="w-3.5 h-3.5 text-purple-400" /> Summary Table</button>
+                      <button type="button" onClick={() => setFormData(prev => ({...prev, body: prev.body + `<div style="text-align: center; margin-bottom: 30px;"><div style="font-size: 48px; line-height: 1; margin-bottom: 15px;">✨</div><h2 class="content-heading" style="color: #ea580c; margin-top: 0; font-size: 26px; font-weight: 800; letter-spacing: 1px;">Happy Occasion!</h2></div><p style="color: #2d3748; font-size: 15px; line-height: 1.7;">&nbsp;</p>`}))} className="text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 shadow-sm hover:shadow-black/20 hover:border-white/20"><Sparkles className="w-3.5 h-3.5 text-yellow-500" /> Festival Header</button>
+                      <button type="button" onClick={() => setFormData(prev => ({...prev, body: prev.body + `<div style="background-color: #faf8f5; padding: 25px; border-radius: 12px; border: 1px solid #e8e2d9; text-align: center; margin: 30px 0;"><p style="margin: 0; font-style: italic; color: #ea580c; font-size: 17px; font-weight: 600; line-height: 1.6;">"Inspiring quote goes here."</p></div><p style="color: #2d3748; font-size: 15px; line-height: 1.7;">&nbsp;</p>`}))} className="text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 shadow-sm hover:shadow-black/20 hover:border-white/20"><Quote className="w-3.5 h-3.5 text-brand-orange" /> Quote Block</button>
+                      <button type="button" onClick={() => setFormData(prev => ({...prev, body: prev.body + `<div class="signature-block" style="border-top: 1px solid #e8e2d9; padding-top: 20px; margin-top: 30px;"><p style="margin: 0; color: #2d3748; font-size: 15px; line-height: 1.6;">Best Regards,<br><strong style="color: #1a202c;">Your Department</strong><br><span style="color: #718096;">Radiant Industrial Co.</span></p></div>`}))} className="text-xs bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 shadow-sm hover:shadow-black/20 hover:border-white/20"><PenTool className="w-3.5 h-3.5 text-slate-400" /> Signature</button>
+                    </div>
+                  )}
+
                   {formData.type === "EMAIL" ? (
-                    <div className="flex-1 overflow-hidden rounded-xl bg-white text-black shadow-xl border border-white/10">
-                      <ReactQuill 
-                        theme="snow" 
-                        value={formData.body} 
-                        onChange={val => setFormData({...formData, body: val})} 
-                        className="h-full flex flex-col [&>.ql-container]:flex-1 [&>.ql-container]:overflow-y-auto"
-                        modules={{
-                          toolbar: [
-                            [{ 'header': [1, 2, 3, false] }],
-                            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                            [{'list': 'ordered'}, {'list': 'bullet'}],
-                            ['link', 'image'],
-                            ['clean']
-                          ]
-                        }}
-                      />
+                    <div className="flex-1 overflow-hidden min-h-0 relative flex flex-col">
+                      {isHtmlMode ? (
+                        <textarea 
+                          value={formData.body} 
+                          onChange={(e) => setFormData({...formData, body: e.target.value})} 
+                          className="flex-1 w-full p-4 bg-[#0f172a] text-slate-300 font-mono text-[13px] resize-none outline-none leading-relaxed rounded-xl border border-white/10 shadow-xl"
+                          placeholder="Write your HTML here..." 
+                          spellCheck={false}
+                        />
+                      ) : (
+                        <NativeHtmlEditor 
+                          value={formData.body}
+                          onChange={val => setFormData({...formData, body: val})}
+                        />
+                      )}
                     </div>
                   ) : (
                     <textarea 

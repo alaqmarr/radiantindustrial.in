@@ -3,26 +3,40 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-export async function addContact(data: { name: string; email: string; phone?: string; company?: string; gstNumber?: string; tags: string[] }) {
+export async function saveContact(data: { id?: string; name: string; email: string; phone?: string; company?: string; gstNumber?: string; tags: string[] }) {
   try {
-    const contact = await prisma.contact.create({
-      data: {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        company: data.company,
-        gstNumber: data.gstNumber,
-      }
-    });
+    let contact;
+    if (data.id) {
+      contact = await prisma.contact.update({
+        where: { id: data.id },
+        data: {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          company: data.company,
+          gstNumber: data.gstNumber,
+        }
+      });
+      // Clear old tags
+      await prisma.contactTag.deleteMany({ where: { contactId: contact.id } });
+    } else {
+      contact = await prisma.contact.create({
+        data: {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          company: data.company,
+          gstNumber: data.gstNumber,
+        }
+      });
+    }
 
     if (data.tags && data.tags.length > 0) {
       for (const tagName of data.tags) {
-        // Find or create tag
         let tag = await prisma.tag.findUnique({ where: { name: tagName } });
         if (!tag) {
           tag = await prisma.tag.create({ data: { name: tagName } });
         }
-        
         await prisma.contactTag.create({
           data: {
             contactId: contact.id,
@@ -35,8 +49,37 @@ export async function addContact(data: { name: string; email: string; phone?: st
     revalidatePath("/admin/lists");
     return { success: true };
   } catch (error: any) {
-    console.error("Error adding contact:", error);
-    return { error: "Failed to add contact. Email might already exist." };
+    console.error("Error saving contact:", error);
+    return { error: "Failed to save contact. Email might already exist." };
+  }
+}
+
+export async function deleteTag(id: string) {
+  try {
+    await prisma.tag.delete({ where: { id } });
+    revalidatePath("/admin/lists");
+    return { success: true };
+  } catch (error) {
+    return { error: "Failed to delete list" };
+  }
+}
+
+export async function saveTag(data: { id?: string; name: string }) {
+  try {
+    if (data.id) {
+      await prisma.tag.update({
+        where: { id: data.id },
+        data: { name: data.name }
+      });
+    } else {
+      await prisma.tag.create({
+        data: { name: data.name }
+      });
+    }
+    revalidatePath("/admin/lists");
+    return { success: true };
+  } catch (error) {
+    return { error: "Failed to save list" };
   }
 }
 
@@ -191,10 +234,10 @@ export async function sendCampaignEmails(
         }
         
         // Make pasted HTML tables look professional and match the email styling
-        res = res.replace(/<table/gi, '<table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: \'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif; font-size: 14px; text-align: left; background-color: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;"');
-        res = res.replace(/<thead/gi, '<thead style="background-color: #f8fafc; border-bottom: 2px solid #e2e8f0;"');
-        res = res.replace(/<th/gi, '<th style="background-color: #ea580c; color: #ffffff; font-weight: 600; padding: 12px 15px; border: 1px solid #e2e8f0; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;"');
-        res = res.replace(/<td/gi, '<td style="padding: 12px 15px; border: 1px solid #e2e8f0; color: #334155;"');
+        res = res.replace(/<table/gi, '<table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: \'Inter\', -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif; font-size: 14px; text-align: left; background-color: #ffffff; border: 1px solid #e8e2d9;"');
+        res = res.replace(/<thead/gi, '<thead style="border-bottom: 2px solid #e8e2d9;"');
+        res = res.replace(/<th/gi, '<th style="background-color: #1e293b; color: #ffffff; font-weight: 600; padding: 12px 16px; border: 1px solid #e8e2d9; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;"');
+        res = res.replace(/<td/gi, '<td style="padding: 12px 16px; border: 1px solid #e8e2d9; color: #2d3748;"');
 
         return res;
       };

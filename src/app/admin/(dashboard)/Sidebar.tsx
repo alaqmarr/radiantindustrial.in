@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { LayoutDashboard, Users, Mail, Settings, LogOut, Send, Menu, X } from "lucide-react";
+import { LayoutDashboard, Users, Mail, Settings, LogOut, Send, Menu, X, Eye } from "lucide-react";
 import LogoutButton from "./LogoutButton";
 
 export default function Sidebar({ user }: { user: { name?: string | null, email?: string | null } }) {
@@ -19,6 +19,7 @@ export default function Sidebar({ user }: { user: { name?: string | null, email?
     { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
     { href: "/admin/lists", icon: Users, label: "Contacts & Lists" },
     { href: "/admin/templates", icon: Mail, label: "Templates" },
+    { href: "/admin/templates/preview", icon: Eye, label: "Preview Gallery" },
     { href: "/admin/campaigns", icon: Send, label: "Campaigns" },
     { href: "/admin/settings", icon: Settings, label: "Settings" },
   ];

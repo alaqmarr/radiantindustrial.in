@@ -81,10 +81,10 @@ export default function CampaignManager({ templates, tags, contacts, globalSetti
     });
 
     // Make pasted HTML tables look professional and match the email styling
-    res = res.replace(/<table/gi, '<table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: \'Segoe UI\', Tahoma, Geneva, Verdana, sans-serif; font-size: 14px; text-align: left; background-color: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;"');
-    res = res.replace(/<thead/gi, '<thead style="background-color: #f8fafc; border-bottom: 2px solid #e2e8f0;"');
-    res = res.replace(/<th/gi, '<th style="background-color: #ea580c; color: #ffffff; font-weight: 600; padding: 12px 15px; border: 1px solid #e2e8f0; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;"');
-    res = res.replace(/<td/gi, '<td style="padding: 12px 15px; border: 1px solid #e2e8f0; color: #334155;"');
+    res = res.replace(/<table/gi, '<table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: \'Inter\', -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, sans-serif; font-size: 14px; text-align: left; background-color: #ffffff; border: 1px solid #e8e2d9;"');
+    res = res.replace(/<thead/gi, '<thead style="border-bottom: 2px solid #e8e2d9;"');
+    res = res.replace(/<th/gi, '<th style="background-color: #1e293b; color: #ffffff; font-weight: 600; padding: 12px 16px; border: 1px solid #e8e2d9; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;"');
+    res = res.replace(/<td/gi, '<td style="padding: 12px 16px; border: 1px solid #e8e2d9; color: #2d3748;"');
 
     return res;
   };

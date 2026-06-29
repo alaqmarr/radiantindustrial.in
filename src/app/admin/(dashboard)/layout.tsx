@@ -26,10 +26,10 @@ export default async function AdminDashboardLayout({
       {/* Main Content */}
       <main className="flex-1 overflow-y-auto overflow-x-hidden relative">
         {/* Subtle glowing orbs in the background for ambiance */}
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-orange/10 blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] rounded-full bg-orange-600/10 blur-[120px] pointer-events-none" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-orange/10 blur-[120px] pointer-events-none -z-10" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] rounded-full bg-orange-600/10 blur-[120px] pointer-events-none -z-10" />
         
-        <div className="p-4 sm:p-8 max-w-6xl mx-auto relative z-10">
+        <div className="p-4 sm:p-8 max-w-6xl mx-auto">
           {children}
         </div>
       </main>
